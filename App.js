@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   TouchableOpacity,
   Alert
 } from 'react-native';
@@ -12,9 +13,6 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     // this.takingPicture = false
-    this.state = {
-      outputText: ""
-    }
   }
   render() {
     return (
@@ -28,14 +26,8 @@ export default class App extends Component {
           type={RNCamera.Constants.Type.back}
           flashMode={RNCamera.Constants.FlashMode.off}
           captureAudio={false}
-          onBarCodeRead={(event) => {
-            // Alert.alert(event.data)
-            this.setState({ outputText: event.data })
-          }}
         />
-        <Text style={{color: "white"}}>
-          {this.state.outputText}
-        </Text>
+        <FakeWhatsapp />
         <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
           <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
             <Text style={{ fontSize: 14 }}> SNAP </Text>
@@ -52,6 +44,30 @@ export default class App extends Component {
       // this.takingPicture = false
     }
   };
+}
+
+class FakeWhatsapp extends Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    let messageComponents = []
+    for (let i = 0; i < 50; i++) {
+      messageComponents.push(
+        <Text style={styles.whatsappMessage} key={i}>
+          ciao lol
+        </Text>)
+    }
+
+    return (
+      <ScrollView style={styles.whatsappPanel}>
+        <Text style={styles.whatsappMessage}>
+          ciao lol
+        </Text>
+        {messageComponents}
+      </ScrollView>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -74,4 +90,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     margin: 20,
   },
+  whatsappPanel: {
+    flex: 1
+  },
+  whatsappMessage: {
+    backgroundColor: "green",
+    color: "black"
+  }
 });
