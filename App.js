@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
   TouchableOpacity,
   Alert
-} from 'react-native';
-import { RNCamera } from "react-native-camera";
+} from 'react-native'
+import { RNCamera } from "react-native-camera"
+import { WebView } from "react-native-webview"
 
 export default class App extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ export default class App extends Component {
       <View style={styles.container}>
         <RNCamera
           ref={ref => {
-            this.camera = ref;
+            this.camera = ref
           }}
           style={styles.preview}
           type={RNCamera.Constants.Type.back}
@@ -39,11 +39,11 @@ export default class App extends Component {
   takePicture = async function () {
     if (this.camera) {
       // this.takingPicture = true
-      const data = await this.camera.takePictureAsync({ quality: 0.5, base64: true });
+      const data = await this.camera.takePictureAsync({ quality: 0.5, base64: true })
       Alert.alert(data.uri)
       // this.takingPicture = false
     }
-  };
+  }
 }
 
 class FakeWhatsapp extends Component {
@@ -51,21 +51,11 @@ class FakeWhatsapp extends Component {
     super(props)
   }
   render() {
-    let messageComponents = []
-    for (let i = 0; i < 50; i++) {
-      messageComponents.push(
-        <Text style={styles.whatsappMessage} key={i}>
-          ciao lol
-        </Text>)
-    }
-
     return (
-      <ScrollView style={styles.whatsappPanel}>
-        <Text style={styles.whatsappMessage}>
-          ciao lol
-        </Text>
-        {messageComponents}
-      </ScrollView>
+      <WebView
+      source={{uri: 'https://www.google.com'}}
+      style={styles.whatsappPanel}
+       />
     )
   }
 }
@@ -77,7 +67,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   preview: {
-    flex: 1,
+    width: 150,
+    height: 150,
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
@@ -95,6 +86,7 @@ const styles = StyleSheet.create({
   },
   whatsappMessage: {
     backgroundColor: "green",
-    color: "black"
+    color: "black",
+    margin: 10
   }
-});
+})
